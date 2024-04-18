@@ -1,5 +1,5 @@
 instances:
-  - url: petstore-openapi.docs.buildwithfern.com
+  - url: project-darwin-ca-openapi.docs.buildwithfern.com
 
 navigation:
   - section: Get Started
