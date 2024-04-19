@@ -282,6 +282,62 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
+    delete:
+      tags:
+        - Notebooks
+      summary: Notebooks
+      description: ''
+      operationId: notebooks
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: notebook_id
+          in: path
+          description: Notebook_id
+          required: true
+          schema:
+            type: string
+        - name: workspace_id
+          in: path
+          description: Workspace_id
+          required: true
+          schema:
+            type: string
+        - name: compute
+          in: path
+          description: Compute
+          required: false
+          schema:
+            type: string
+        - name: storage
+          in: path
+          description: Storage
+          required: false
+          schema:
+            type: string
+        - name: github
+          in: path
+          description: Github
+          required: false
+          schema:
+            type: string
+        - name: ssh_keys
+          in: path
+          description: SSH Keys
+          required: false
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid data value
+      security:
+        - petstore_auth:
+            - 'write:pets'
+            - 'read:pets'
   '/mountDataFiles/{dataId}':
     post:
       tags:
