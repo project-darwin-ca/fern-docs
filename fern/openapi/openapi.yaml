@@ -1,6 +1,6 @@
 openapi: 3.0.2
 servers:
-  - url: https://www.petstore-openapi.com/v3
+  - url: https://www.darwinapi-production.up.railway.app
     description: Demo server
 info:
   description: |-
@@ -36,12 +36,12 @@ tags:
   - name: registry
     description: Operations about user
 paths:
-  /data:
+  /registerProvider:
     post:
       tags:
         - Data
-      summary: Upload data into Darwin
-      description: Add a new custom workflow to your toolkit
+      summary: Register Cloud Provider
+      description: By passing the cloud provider information, you will be able to connect to object storage provided by that cloud.
       operationId: addPet
       responses:
         '200':
@@ -72,11 +72,13 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Pet'
-    put:
+  paths:
+  /registerProvider/updateCredentials:
+    post:
       tags:
         - Data
-      summary: Update an existing pet
-      description: Update an existing pet by Id
+      summary: Update Cloud Credentials
+      description: By passing the cloud provider information, you can update the credentials associated to your account.
       operationId: updatePet
       responses:
         '200':
@@ -111,13 +113,13 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Pet'
-  /pet/findByStatus:
+  /fetchBuckets:
     get:
       tags:
         - Data
-      summary: Finds Pets by status
-      description: Multiple status values can be provided with comma separated strings
-      operationId: findPetsByStatus
+      summary: Fetch all the buckets associated with User
+      description: Users will be able to fetch all the buckets associated with Credentials binded to users id.
+      operationId: fetchBuckets
       parameters:
         - name: status
           in: query
@@ -151,20 +153,28 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
-  /pet/findByTags:
+  /fetchObjects/region/bucketName:
     get:
       tags:
         - Data
-      summary: Finds pets by tags
+      summary: Fetch Objects given the bucket selected by user
       description: >-
-        Multiple tags can be provided with comma separated strings. Use tag1,
-        tag2, tag3 for testing.
-      operationId: findPetsByTags
+        Fetch Objects given the bucket selected by user.
+      operationId: fetchObjects/region/bucketName
       parameters:
-        - name: tags
+        - name: bucketName
           in: query
-          description: Tags to filter by
-          required: false
+          description: Name of bucket
+          required: true
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: region
+          in: query
+          description: Region the bucket belongs to
+          required: true
           explode: true
           schema:
             type: array
@@ -190,21 +200,15 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
-  '/pet/{petId}':
+  '/fetchFiles':
     get:
       tags:
         - Data
-      summary: Find pet by ID
-      description: Returns a single pet
-      operationId: getPetById
+      summary: Fetch Mounted Files
+      description: Fetch all the files Mounted for analysis.
+      operationId: fetchFiles
       parameters:
-        - name: petId
-          in: path
-          description: ID of pet to return
-          required: true
-          schema:
-            type: integer
-            format: int64
+      
       responses:
         '200':
           description: successful operation
@@ -224,30 +228,15 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
+  '/mountDataFiles':
     post:
       tags:
         - Data
-      summary: Updates a pet in the store with form data
-      description: ''
-      operationId: updatePetWithForm
+      summary: Mount the Data from S3
+      description: Mount the object into data manager.
+      operationId: mountDataFiles
       parameters:
-        - name: petId
-          in: path
-          description: ID of pet that needs to be updated
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: name
-          in: query
-          description: Name of pet that needs to be updated
-          schema:
-            type: string
-        - name: status
-          in: query
-          description: Status of pet that needs to be updated
-          schema:
-            type: string
+
       responses:
         '405':
           description: Invalid input
@@ -255,12 +244,12 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
-    delete:
+    get:
       tags:
-        - Data
-      summary: Delete a pet
+        - Data Explorer
+      summary: Data Explorer
       description: ''
-      operationId: deletePet
+      operationId: dataExplorer
       parameters:
         - name: api_key
           in: header
@@ -268,13 +257,24 @@ paths:
           required: false
           schema:
             type: string
-        - name: petId
+        - name: dataset
           in: path
-          description: Pet id to delete
+          description: Dataset to retrieve
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+        - name: tag
+          in: path
+          description: Data Category
+          required: true
+          schema:
+            type: string
+        - name: source
+          in: path
+          description: Data Source
+          required: true
+          schema:
+            type: string
       responses:
         '400':
           description: Invalid pet value
@@ -282,27 +282,21 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
-  '/pet/{petId}/uploadImage':
+  '/mountDataFiles/{dataId}':
     post:
       tags:
         - Data
-      summary: Upload an image
-      description: ''
-      operationId: uploadFile
+      summary: Reprocess the Data File
+      description: Reprocess data file to be copied from source bucket to destination bucket.
+      operationId: mountDataFiles/dataId
       parameters:
-        - name: petId
+        - name: dataId
           in: path
-          description: ID of pet to update
+          description: Id of data to reprocess
           required: true
           schema:
             type: integer
             format: int64
-        - name: additionalMetadata
-          in: query
-          description: Additional Metadata
-          required: false
-          schema:
-            type: string
       responses:
         '200':
           description: successful operation
@@ -323,8 +317,8 @@ paths:
     get:
       tags:
         - Custom Workflows
-      summary: Returns pet inventories by status
-      description: Returns a map of status codes to quantities
+      summary: RNA Bulk Seq Pipeline
+      description: Returns inference from RNA Bulk Seq
       operationId: getInventory
       x-swagger-router-controller: OrderController
       responses:
@@ -343,8 +337,8 @@ paths:
     post:
       tags:
         - Custom Workflows
-      summary: Place an order for a pet
-      description: Place a new order in the store
+      summary: Configure Resource Provisioning
+      description: Adjust parameters based on compute needs
       operationId: placeOrder
       x-swagger-router-controller: OrderController
       responses:
@@ -371,7 +365,7 @@ paths:
     get:
       tags:
         - Custom Workflows
-      summary: Find purchase order by ID
+      summary: Configure Batch Size
       x-swagger-router-controller: OrderController
       description: >-
         For valid response try integer IDs with value <= 5 or > 10. Other values
@@ -402,7 +396,7 @@ paths:
     delete:
       tags:
         - Custom Workflows
-      summary: Delete purchase order by ID
+      summary: Delete Workflow
       x-swagger-router-controller: OrderController
       description: >-
         For valid response try integer IDs with value < 1000. Anything above
@@ -421,11 +415,11 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Order not found
-  /user:
+  /record:
     post:
       tags:
         - Registry
-      summary: Create user
+      summary: Create record
       description: This can only be done by the logged in user.
       operationId: createUser
       responses:
@@ -450,12 +444,12 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
         description: Created user object
-  /user/createWithList:
+  /record/createWithList:
     post:
       tags:
         - Registry
-      summary: Creates list of users with given input array
-      description: 'Creates list of users with given input array'
+      summary: Creates list of records with given input array
+      description: 'Creates list of records with given input array'
       x-swagger-router-controller: UserController
       operationId: createUsersWithListInput
       responses:
@@ -481,7 +475,7 @@ paths:
     get:
       tags:
         - Registry
-      summary: Logs user into the system
+      summary: Logs record into the system
       description: ''
       operationId: loginUser
       parameters:
@@ -535,7 +529,7 @@ paths:
     get:
       tags:
         - Registry
-      summary: Get user by user name
+      summary: Get record by recordId
       description: ''
       operationId: getUserByName
       parameters:
@@ -562,7 +556,7 @@ paths:
     put:
       tags:
         - Registry
-      summary: Update user
+      summary: Update record
       x-swagger-router-controller: UserController
       description: This can only be done by the logged in user.
       operationId: updateUser
@@ -591,7 +585,7 @@ paths:
     delete:
       tags:
         - Registry
-      summary: Delete user
+      summary: Delete record
       description: This can only be done by the logged in user.
       operationId: deleteUser
       parameters:
@@ -605,7 +599,7 @@ paths:
         '400':
           description: Invalid username supplied
         '404':
-          description: User not found
+          description: Record not found
 externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
@@ -738,52 +732,22 @@ components:
     Pet:
       x-swagger-router-model: io.swagger.petstore.model.Pet
       required:
-        - name
-        - photoUrls
+        - provider
+        - access_key
+        - secret_access_key
       properties:
-        id:
-          type: integer
-          format: int64
-          example: 10
-        name:
+        provider:
           type: string
-          example: doggie
-        category:
-          $ref: '#/components/schemas/Category'
-        photoUrls:
-          type: array
-          xml:
-            wrapped: true
-          items:
-            type: string
-            xml:
-              name: photoUrl
-        tags:
-          type: array
-          xml:
-            wrapped: true
-          items:
-            $ref: '#/components/schemas/Tag'
-            xml:
-              name: tag
-        status:
+          example: aws
+        access_key:
           type: string
-          description: pet status in the store
-          enum:
-            - available
-            - pending
-            - sold
-      xml:
-        name: pet
-      type: object
+          example: AKIAIOSFODNN7EXAMPLE
+        secret_access_key:
+          type: string
+          example: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
     ApiResponse:
       properties:
-        code:
-          type: integer
-          format: int32
-        type:
-          type: string
-        message:
+        success:
           type: string
       xml:
         name: '##default'

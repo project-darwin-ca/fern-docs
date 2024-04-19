@@ -14,10 +14,10 @@ navigation:
 navbar-links: 
   - type: secondary
     text: Get support
-    url: "mailto:support@buildwithfern.com"
+    url: "mailto:support@darwinbio.io"
   - type: primary
     text: Get a Demo
-    url: https://buildwithfern.com/contact
+    url: https://darwincloud.xyz
 
 colors:
   accentPrimary:
