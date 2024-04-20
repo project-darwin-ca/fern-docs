@@ -6,10 +6,21 @@ navigation:
     contents: 
       - page: Welcome
         path: ./docs/pages/welcome.mdx
-      - page: SDKs
+      - page: Darwin SDK
         path: ./docs/pages/sdks.mdx
         slug: sdks
+      - page: Model Index
+        path: ./docs/pages/model_index.mdx
+  - section: Darwin Toolkit
+    contents:
+      - page: Data
+        path: ./docs/pages/data.mdx
+      - page: Workflows
+        path: ./docs/pages/workflows.mdx
+      - page: Notebooks
+        path: ./docs/pages/notebook.mdx   
   - api: API Reference
+  
 
 navbar-links: 
   - type: secondary

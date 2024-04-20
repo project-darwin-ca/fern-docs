@@ -31,7 +31,7 @@ tags:
     externalDocs:
       description: Find out more about our store
       url: 'http://swagger.io'
-  - name: pods
+  - name: notebooks
     description: Operations about user
   - name: registry
     description: Operations about user
@@ -248,7 +248,7 @@ paths:
       tags:
         - Data Explorer
       summary: Data Explorer
-      description: ''
+      description: Find your favorite genomic data sets from scientists across the world.
       operationId: dataExplorer
       parameters:
         - name: api_key
@@ -286,7 +286,7 @@ paths:
       tags:
         - Notebooks
       summary: Notebooks
-      description: ''
+      description: Start up a Jupyter Notebook or R Studio Session within a Darwin Elastic Pod
       operationId: notebooks
       parameters:
         - name: api_key
@@ -369,7 +369,7 @@ paths:
           application/plain:
             schema:
               type: string              
-  /store/inventory:
+  /workflows/rna:
     get:
       tags:
         - Custom Workflows
@@ -389,7 +389,7 @@ paths:
                   format: int32
       security:
         - api_key: []
-  /store/order:
+  /workflows/custom:
     post:
       tags:
         - Custom Workflows
@@ -417,38 +417,7 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Order'
-  '/store/order/{orderId}':
-    get:
-      tags:
-        - Custom Workflows
-      summary: Configure Batch Size
-      x-swagger-router-controller: OrderController
-      description: >-
-        For valid response try integer IDs with value <= 5 or > 10. Other values
-        will generate exceptions.
-      operationId: getOrderById
-      parameters:
-        - name: orderId
-          in: path
-          description: ID of order that needs to be fetched
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Order'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order'
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Order not found
+  '/workflows/custom/delete':
     delete:
       tags:
         - Custom Workflows
@@ -666,29 +635,81 @@ components:
       properties:
         id:
           type: integer
+          required: true
           format: int64
           example: 10
-        petId:
-          type: integer
-          format: int64
-          example: 198772
         quantity:
           type: integer
+          required: true
+          format: int64
+          example: 198772
+        shipDate:
+          type: integer
+          required: true
           format: int32
           example: 7
-        shipDate:
-          type: string
-          format: date-time
         status:
           type: string
+          required: true
+          format: date-time
+        memory:
+          type: string
+          required: true
+          format: date-time
+        cpu:
+          type: string
+          required: true
           description: Order Status
           enum:
             - placed
             - approved
             - delivered
           example: approved
+        gpu:
+         type: object
+         properties:
+            count: 
+              type: integer
+              example: 2
+              description: The number of GPU cards required.
+            type:
+              type: string
+              example: "nvidia-tesla-v100"
+              description: The type of GPU card required.
+        disk_space:
+          type: string
+          required: true
+          example: "20Gi"
+          description: The disk space needed, in a string with units.
+        node_selector:
+          type: object
+          required: true
+          example: {"disktype": "ssd"}
+          description: Key-value pairs for node selection to schedule jobs on specific nodes.
+        tolerations:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              operator:
+                type: string
+              value:
+                type: string
+              effect:
+                type: string
+          example: [{"key": "dedicated", "operator": "Equal", "value": "gpu-intensive", "effect": "NoSchedule"}]
+          description: Tolerations for scheduling on nodes with taints.
+        affinity:
+          type: object
+          required: true
+          description: An object defining affinity rules for pod placement.
         complete:
           type: boolean
+          required: true
+          example: false
+          description: Flag indicating whether the provisioning is complete.
       xml:
         name: order
       type: object
