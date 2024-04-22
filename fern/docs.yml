@@ -1,5 +1,6 @@
 instances:
   - url: project-darwin-ca-openapi.docs.buildwithfern.com
+    custom-domain: docs.darwinbio.io
 
 navigation:
   - section: Get Started
