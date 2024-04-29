@@ -14,14 +14,17 @@ navigation:
         path: ./docs/pages/model_index.mdx
   - section: Darwin Toolkit
     contents:
+      - page: Tooling
+        path: ./docs/pages/tooling.mdx
       - page: Data
         path: ./docs/pages/data.mdx
-      - page: Workflows
-        path: ./docs/pages/workflows.mdx
-      - page: Notebooks
-        path: ./docs/pages/notebook.mdx   
+      - page: Experimentation
+        path: ./docs/pages/experimentation.mdx 
+      - page: Analysis
+        path: ./docs/pages/analysis.mdx
+      - page: Visualization
+        path: ./docs/pages/visualization.mdx
   - api: API Reference
-  
 
 navbar-links: 
   - type: secondary
