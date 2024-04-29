@@ -10,8 +10,8 @@ navigation:
       - page: Darwin SDK
         path: ./docs/pages/sdks.mdx
         slug: sdks
-      - page: Model Index
-        path: ./docs/pages/model_index.mdx
+      - page: Data Explorer
+        path: ./docs/pages/data-explorer.mdx
   - section: Darwin Toolkit
     contents:
       - page: Tooling
