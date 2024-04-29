@@ -14,7 +14,7 @@ navigation:
         path: ./docs/pages/registry.mdx
       - page: Workflows
         path: ./docs/pages/workflows.mdx
-      - page: Elastic Pods
+      - page: Notebooks
         path: ./docs/pages/notebook.mdx
       - page: Data Explorer
         path: ./docs/pages/data-explorer.mdx
