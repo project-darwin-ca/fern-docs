@@ -10,8 +10,15 @@ navigation:
       - page: Darwin SDK
         path: ./docs/pages/sdks.mdx
         slug: sdks
+      - page: Registry
+        path: ./docs/pages/registry.mdx
+      - page: Workflows
+        path: ./docs/pages/workflows.mdx
+      - page: Elastic Pods
+        path: ./docs/pages/notebook.mdx
       - page: Data Explorer
         path: ./docs/pages/data-explorer.mdx
+      
   - section: Darwin Toolkit
     contents:
       - page: Tooling
