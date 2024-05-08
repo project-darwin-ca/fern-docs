@@ -248,7 +248,7 @@ paths:
       tags:
         - Data Explorer
       summary: Data Explorer
-      description: Find your favorite genomic data sets from scientists across the world.
+      description: Search for your favorite genomic datasets from scientists here!
       operationId: dataExplorer
       parameters:
         - name: api_key
