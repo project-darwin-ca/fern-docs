@@ -10,13 +10,22 @@ navigation:
       - page: Darwin SDK
         path: ./docs/pages/sdks.mdx
         slug: sdks
-      - page: Data Explorer
-        path: ./docs/pages/data-explorer.mdx
+  - section: Tooling
+    contents: 
+      - page: Alphafold
+        path: ./docs/pages/alphafold.mdx
+      - page: RF Diffusion
+        path: ./docs/pages/rfdiffusion.mdx
+        slug: sdks
+      - page: FASTQC
+        path: ./docs/pages/fastqc.mdx
+      - page: Cell Ranger
+        path: ./docs/pages/cellranger.mdx
+      - page: Seurat
+        path: ./docs/pages/seurat.mdx
       
-  - section: Darwin Toolkit
+  - section: Darwin Walkthrough
     contents:
-      - page: Tooling
-        path: ./docs/pages/tooling.mdx
       - page: Data
         path: ./docs/pages/data.mdx
       - page: Experimentation
