@@ -17,6 +17,8 @@ navigation:
     contents:
       - page: Tooling
         path: ./docs/pages/tooling.mdx
+      - page: Cell Ranger Test
+        path: ./docs/pages/cellranger.mdx
       - page: Data
         path: ./docs/pages/data.mdx
       - page: Experimentation
