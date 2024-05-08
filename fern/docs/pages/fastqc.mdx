@@ -1,35 +1,24 @@
 ---
-title: FASTQC
-description: Best practices for using FastQC for visualizaiton.
+title: FASTQC | Tutorial
+description: Learn about how to use FASTQC in Darwin
 ---
 
-We regularly update our Model Versions using [Darwin](https://buildwithfern.com/?utm_source=docs-starter-openapi/sdks) and adhere to [semantic versioning](https://semver.org/) (semver) principles, so we won't make breaking changes in minor or patch releases.
+**1. Log In and Setup Workspace:**
+Start by logging into your Darwin account.
+Navigate to your workspace or create a new one if you haven't set one up yet.
 
-## Officially Supported Foundational Models
+**2. Upload Your Data: **
+Go to the 'Data' section within your workspace.
+Click on 'Upload Data' and select your sequencing files (typically FASTQ format) from your computer or connected storage.
 
-<Cards>
-  <Card
-    title="AlphaFold 2.0"
-    icon="fa-solid fa-stream"
-    href="https://www.nextflow.io"
-  />
-  <Card
-    title="RNA Bulk Seq Pipeline"
-    icon="fa-solid fa-network-wired"
-    href="https://snakemake.readthedocs.io/en/stable/"
-  />
-  <Card
-    title="Arc Institute's EVO Model"
-    icon="fa-solid fa-toolbox"
-    href="https://docs.aws.amazon.com/pythonsdk/"
-  />
-  <Card
-    title="NASA GeneLab Pipeline"
-    icon="fa-solid fa-toolbox"
-    href="https://docs.aws.amazon.com/pythonsdk/"
-  />
-</Cards>
+**3. Access FASTQC Tool:**
+In the Darwin dashboard, search for the FASTQC tool from the list of available tools or use the search bar to find it quickly.
 
-## Not seeing a model you're building with?
+**4. Configure FASTQC Parameters:**
+Click on FASTQC to open its configuration settings.
+Upload your sequencing files to the tool or select the already uploaded files.
+Set any specific parameters required for your analysis, though the default settings are generally sufficient for a standard quality check.
 
-If you'd like to request an open-source model that we don't currently support, [let us know](/welcome.mdx#get-support). We're always looking to expand our current repository of foundational models and would love to hear from you.
+**5. Run the Analysis and Review Results:**
+Once you've configured all settings, submit your job for analysis by clicking the 'Run' button.
+After the analysis completes, you can view the FASTQC reports directly on Darwin. These reports will include various quality metrics such as per base sequence quality, sequence duplication levels, and overrepresented sequences which are crucial for assessing the quality of your sequencing data.
